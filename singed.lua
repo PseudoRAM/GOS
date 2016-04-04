@@ -81,7 +81,7 @@ OnDraw(function(myHero)
     if Singed.Draw.DrawsEb:Value() then
         if IsReady(_W) then
             if Singed.Draw.DrawW:Value() then 
-                DrawCircle3D(pos.x, pos.y, pos.z, WRange, 1, Singed.Draw.WRcol:Value(), Singed.Draw.DrawQuality:Value()) 
+                DrawCircle3D(pos.x, pos.y, pos.z, WRange, 1, Singed.Draw.Wcol:Value(), Singed.Draw.DrawQuality:Value()) 
             end
         end
         if IsReady(_E) then
