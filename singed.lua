@@ -93,7 +93,7 @@ OnDraw(function(myHero)
 
 	if #n > 0 then
 		for  i = 1, #n do
-			if GetDistance(n[i]) < 2000 and Valid(n[i]) then
+			if GetDistance(n[i]) < 2000 then
 				local drawPos = GetOrigin(n[i])
         	  	local armor = GetArmor(n[i])
         	  	local hp = GetCurrentHP(n[i])
@@ -130,4 +130,4 @@ OnTick(function(myHero)
     
 end)
 
-PrintChat("<font color=\'#fc1212\'><b>[Nova]<font color=\'#ffffff\'>: Singed Loaded!</b></font>")
+PrintChat("<font color=\'#fc1212\'><b>[Nova]: <font color=\'#ffffff\'>Singed Loaded!</b></font>")
