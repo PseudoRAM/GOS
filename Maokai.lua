@@ -77,29 +77,6 @@ Tree:SubMenu("Skin","Skin")
     Tree.Skin:Boolean("SkinEnable", "Use Skin", false)
     Tree.Skin:Slider("Value", "Skin Number", 0, 0, 6, 1)
 
--- E then W to cancel
-CHANELLING_SPELLS = {
-    ["CaitlynAceintheHole"]         = {Name = "Caitlyn",      Spellslot = _R},
-    ["Crowstorm"]                   = {Name = "FiddleSticks", Spellslot = _R},
-    ["Drain"]                       = {Name = "FiddleSticks", Spellslot = _W},
-    ["GalioIdolOfDurand"]           = {Name = "Galio",        Spellslot = _R},
-    ["ReapTheWhirlwind"]            = {Name = "Janna",        Spellslot = _R},
-    ["KarthusFallenOne"]            = {Name = "Karthus",      Spellslot = _R},
-    ["KatarinaR"]                   = {Name = "Katarina",     Spellslot = _R},
-    ["LucianR"]                     = {Name = "Lucian",       Spellslot = _R},
-    ["AlZaharNetherGrasp"]          = {Name = "Malzahar",     Spellslot = _R},
-    ["MissFortuneBulletTime"]       = {Name = "MissFortune",  Spellslot = _R},
-    ["AbsoluteZero"]                = {Name = "Nunu",         Spellslot = _R},
-    ["PantheonRJump"]               = {Name = "Pantheon",     Spellslot = _R},
-    ["ShenStandUnited"]             = {Name = "Shen",         Spellslot = _R},
-    ["Destiny"]                     = {Name = "TwistedFate",  Spellslot = _R},
-    ["UrgotSwap2"]                  = {Name = "Urgot",        Spellslot = _R},
-    ["VarusQ"]                      = {Name = "Varus",        Spellslot = _Q},
-    ["InfiniteDuress"]              = {Name = "Warwick",      Spellslot = _R},
-    ["XerathLocusOfPower2"]         = {Name = "Xerath",       Spellslot = _R}
-
-}
-
 
 -- Automatic Spell Casting
 local function SpellCast()
@@ -115,7 +92,7 @@ local function SpellCast()
         
             IDmg = (50 + GetLevel(myHero) * 20) * IReady
             
-            if IReady == 1 and health < IDmg and GetDistance(n[i]) <= 600 then
+            if IReady == 1 and IDmg > GetCurrentHP(n[i])+GetHPRegen(n[i])*2.5 and GetDistance(n[i]) <= 600 then
                 if Tree.SP.Ignite:Value() then
                     CastTargetSpell(n[i], Ignite)
                 end
@@ -167,11 +144,10 @@ function ComboActivate(unit)
         --Q
         if Tree.Combo.Q:Value() and QReady and ValidTarget(unit, RANGE_Q ) then
 			local QPredict = GetLinearAOEPrediction(unit, MaoQ(unit))
-			--myHero:Cast(_Q, unit)
             CastSkillShot(_Q , unit.pos)
 		end
         
-        
+        --R
         if IsReady(_R) and GotBuff(myHero, "VengefulMaelstrom") ~= 1 and ValidTarget(unit, RANGE_R) and GetDistance(unit) <= RANGE_R then
             CastSpell(_R)
         elseif IsReady(_R) and GotBuff(myHero, "VengefulMaelstrom") == 1 and ValidTarget(unit, RANGE_R) and GetDistance(unit) >= RANGE_R + 400 then
@@ -229,12 +205,7 @@ OnDraw(function(myHero)
 		for  i = 1, #n do
 			if GetDistance(n[i]) < 2000 then
 				local drawPos = GetOrigin(n[i])
-        	  	local armor = GetArmor(n[i])
-        	  	local hp = GetCurrentHP(n[i])
-        	  	local hpreg = GetHPRegen(n[i])
-        		local shield = GetDmgShield(n[i])
-                local health = hp * ((100 + ((armor - GetArmorPenFlat(myHero)) * GetArmorPenPercent(myHero))) * .01) + hpreg * 6 + shield
-        		if health < IDmg then
+        		if IDmg > GetCurrentHP(n[i])+GetHPRegen(n[i])*2.5 then
           			DrawCircle(drawPos, 50, 0, 0, 0xffff0000) --red
                 end
 	  	    end
