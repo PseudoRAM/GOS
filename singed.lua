@@ -36,7 +36,7 @@ Singed:Menu("Draw", "Drawings")
 Singed.Draw:Boolean("DrawsEb", "Enable Drawings", true)
 Singed.Draw:Slider("DrawQuality", "Quality Drawings", 50, 1, 100, 1)
 Singed.Draw:Boolean("DrawW", "W Range", true)
-Singed.Draw:ColorPick("Wcol", "Q + R Color", {33, 79, 213, 255})
+Singed.Draw:ColorPick("Wcol", "W Color", {33, 79, 213, 255})
 Singed.Draw:Boolean("DrawE", "E Range", true)
 Singed.Draw:ColorPick("Ecol", "E Color", {135, 244, 245, 120})
 
